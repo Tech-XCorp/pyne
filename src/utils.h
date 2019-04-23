@@ -88,6 +88,9 @@ namespace pyne {
   /// Returns a capitalized copy of the string.
   std::string capitalize(std::string s);
 
+  /// Forms and returns the wrapped lines with a lenght up to line_lenght.
+  std::ostringstream line_wrapping(std::string line, int line_lenght = 80);
+
   /// Finds and returns the first white-space delimited token of a line.
   /// \param line a character array to take the first token from.
   /// \param max_l an upper bound to the length of the token.  Must be 11 or less.
@@ -135,6 +138,11 @@ namespace pyne {
   // File Helpers
   /// Returns true if the file can be found.
   bool file_exists(std::string strfilename);
+  
+  // turns the filename string into the full file path
+  std::string get_full_filepath(char* filename);
+  // turns the filename string into the full file path
+  std::string get_full_filepath(std::string filename);
 
   // Message Helpers
   extern bool USE_WARNINGS;
@@ -157,23 +165,21 @@ namespace pyne {
     ~FileNotFound () throw () {};
 
     /// constructor with the filename \a fname.
-    FileNotFound(std::string fname)
+    FileNotFound(std::string fname) 
     {
-      filename = fname;
+      FNF_message = "File not found";
+      if (!fname.empty())
+        FNF_message += ": " + fname;
     };
 
     /// Creates a helpful error message.
     virtual const char* what() const throw()
     {
-      std::string FNFstr ("File not found: ");
-      if (!filename.empty())
-        FNFstr += filename;
-
-      return (const char *) FNFstr.c_str();
+      return FNF_message.c_str();
     };
 
   private:
-    std::string filename; ///< unfindable filename.
+    std::string FNF_message; /// Message for exception
   };
 
   /// Exception representing value errors of all kinds

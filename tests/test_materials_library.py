@@ -2,7 +2,8 @@ import os
 
 from nose.tools import assert_true, assert_false, assert_in, assert_equal
 from pyne.dbgen.materials_library import *
-from pyne.material import Material, MaterialLibrary
+from pyne.material import Material
+from pyne.material_library import MaterialLibrary
 from pyne.pyne_config import pyne_conf
 import pyne.nucname as nucname
 import tables as tb
@@ -79,11 +80,16 @@ def test_against_nuc_data():
         metadata={"name": "Plutonium Bromide"}).expand_elements()
 
     obs_gasoline = obs_matslib["Gasoline"]
-    assert_equal(set(obs_gasoline.comp.items()), set(gasoline.comp.items()))
+   
+    # remove empty elements
+    assert_equal( { (x,val) for x,val in set(obs_gasoline.comp.items()) if val > 0 }, 
+            set(gasoline.comp.items()))
     assert_equal(obs_gasoline.density, gasoline.density)
     assert_equal(obs_gasoline.metadata["name"], gasoline.metadata["name"])
 
     obs_pubr3 = obs_matslib["Plutonium Bromide"]
-    assert_equal(set(obs_pubr3.comp.items()), set(pubr3.comp.items()))
+    # remove empty elements
+    assert_equal( { (x,val) for x,val in set(obs_pubr3.comp.items()) if val > 0 }, 
+            set(pubr3.comp.items()))
     assert_equal(obs_pubr3.density, pubr3.density)
     assert_equal(obs_pubr3.metadata["name"], pubr3.metadata["name"])
