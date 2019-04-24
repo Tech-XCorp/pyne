@@ -1233,8 +1233,7 @@ def test_phits():
                           'name':'leu'})
 
     mass = leu.phits()
-    mass_exp = ('[ M a t e r i a l ]\n'
-                'C name: leu\n'
+    mass_exp = ('C name: leu\n'
                 'C comments: this is a long comment that will definitly go over the 80 character\n'
                 'C  limit, for science\n'
                 'M[ 2 ]\n'
@@ -1243,8 +1242,7 @@ def test_phits():
     assert_equal(mass, mass_exp)
     
     atom = leu.phits(frac_type='atom')
-    atom_exp = ('[ M a t e r i a l ]\n'
-                'C name: leu\n'
+    atom_exp = ('C name: leu\n'
                 'C comments: this is a long comment that will definitly go over the 80 character\n'
                 'C  limit, for science\n'
                 'M[ 2 ]\n'
@@ -1263,8 +1261,7 @@ def test_phits():
                    density=19.1)
 
     mass = leu.phits()
-    mass_exp = ('[ M a t e r i a l ]\n'
-                'C name: leu\n'
+    mass_exp = ('C name: leu\n'
                 'C comments: this is a long comment that will definitly go over the 80 character\n'
                 'C  limit, for science\n'
                 'M[ 2 ]\n'
@@ -1273,8 +1270,7 @@ def test_phits():
     assert_equal(mass, mass_exp)
     
     atom = leu.phits(frac_type='atom')
-    atom_exp = ('[ M a t e r i a l ]\n'
-                'C name: leu\n'
+    atom_exp = ('C name: leu\n'
                 'C comments: this is a long comment that will definitly go over the 80 character\n'
                 'C  limit, for science\n'
                 'M[ 2 ]\n'
@@ -1329,13 +1325,13 @@ def test_gdml():
                    density=19.1)
 
     gdml_input = leu.gdml()
-    gdml_input_exp = ('<element name="leu_Uranium" >\n'
+    gdml_input_exp = ('<element name="mat2_Uranium" >\n'
                       '  <fraction ref="U235" n="0.04" />\n'
                       '  <fraction ref="U238" n="0.96" />\n'
                       '</element>\n'
-                      '<material name="leu" formula="leu" >\n'
+                      '<material name="mat2" formula="leu" >\n'
                       '  <D value=19.1" />\n'
-                      '  <fraction n="1" ref="leu_Uranium" />\n'
+                      '  <fraction n="1" ref="mat2_Uranium" />\n'
                       '</material>\n')
     assert_equal(gdml_input, gdml_input_exp)
 
