@@ -312,12 +312,8 @@ def test_collapse_elements1():
 
     mat  = Material(nucvec)
 
-    print("Original")
-    print(mat)
 
     cmat = mat.collapse_elements(exception_ids)
-    print("Collapsed")
-    print(cmat)
 
     assert_equal(cmat.comp[80000000],  mat.comp[80160000] + mat.comp[80160001])
     assert_equal(cmat.comp[922350000], mat.comp[922350000])
@@ -1329,7 +1325,7 @@ def test_gdml():
                       '  <fraction ref="U235" n="0.04" />\n'
                       '  <fraction ref="U238" n="0.96" />\n'
                       '</element>\n'
-                      '<material name="mat2" formula="leu" >\n'
+                      '<material name="leu" formula="leu" >\n'
                       '  <D value=19.1" />\n'
                       '  <fraction n="1" ref="mat2_Uranium" />\n'
                       '</material>\n')
@@ -1642,6 +1638,7 @@ def test_matlib_json():
     lib = {"leu": Material(leu), "nucvec": nucvec, "aqua": water}
     wmatlib = MaterialLibrary(lib)
     wmatlib.write_json(filename)
+    
     rmatlib = MaterialLibrary()
     rmatlib.from_json(filename)
     assert_equal(set(wmatlib), set(rmatlib))
